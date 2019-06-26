@@ -97,7 +97,7 @@ class Tracer(object):
 
     def configure(self, enabled=None, hostname=None, port=None, dogstatsd_host=None,
                   dogstatsd_port=None, sampler=None, context_provider=None, wrap_executor=None,
-                  priority_sampling=None, settings=None, collect_metrics=None):
+                  priority_sampling=None, settings=None, collect_metrics=None, use_https=False):
         """
         Configure an existing Tracer the easy way.
         Allow to configure or reconfigure a Tracer instance.
@@ -147,6 +147,7 @@ class Tracer(object):
                 port or default_port,
                 filters=filters,
                 priority_sampler=self.priority_sampler,
+                use_https=use_https,
             )
 
         if context_provider is not None:

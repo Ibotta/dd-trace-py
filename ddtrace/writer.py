@@ -19,14 +19,14 @@ LOG_ERR_INTERVAL = 60
 
 class AgentWriter(object):
 
-    def __init__(self, hostname='localhost', port=8126, filters=None, priority_sampler=None):
+    def __init__(self, hostname='localhost', port=8126, filters=None, priority_sampler=None, use_https=False):
         self._pid = None
         self._traces = None
         self._worker = None
         self._filters = filters
         self._priority_sampler = priority_sampler
         priority_sampling = priority_sampler is not None
-        self.api = api.API(hostname, port, priority_sampling=priority_sampling)
+        self.api = api.API(hostname, port, priority_sampling=priority_sampling, use_https=use_https)
 
     def write(self, spans=None, services=None):
         # if the worker needs to be reset, do it.

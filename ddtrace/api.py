@@ -106,9 +106,10 @@ class API(object):
     # This ought to be enough as the agent is local
     TIMEOUT = 2
 
-    def __init__(self, hostname, port, headers=None, encoder=None, priority_sampling=False):
+    def __init__(self, hostname, port, headers=None, encoder=None, priority_sampling=False, use_https=False):
         self.hostname = hostname
         self.port = int(port)
+        self.use_https = use_https
 
         self._headers = headers or {}
         self._version = None
@@ -209,7 +210,10 @@ class API(object):
         headers = self._headers.copy()
         headers[self.TRACE_COUNT_HEADER] = str(count)
 
-        conn = httplib.HTTPConnection(self.hostname, self.port, timeout=self.TIMEOUT)
+        if self.use_https:
+            conn = httplib.HTTPSConnection(self.hostname, self.port, timeout=self.TIMEOUT)
+        else:
+            conn = httplib.HTTPConnection(self.hostname, self.port, timeout=self.TIMEOUT)
 
         try:
             conn.request('PUT', endpoint, data, headers)
