@@ -63,6 +63,15 @@ class Response(object):
             msg=getattr(resp, 'msg', None),
         )
 
+    @classmethod
+    def from_requests_http_response(cls, resp):
+        return cls(
+            status=resp.status_code,
+            body=resp.content,
+            reason=getattr(resp, 'reason', None),
+            msg=getattr(resp, 'msg', None),
+        )
+
     def get_json(self):
         """Helper to parse the body of this request as JSON"""
         try:
@@ -211,7 +220,7 @@ class API(object):
         headers[self.TRACE_COUNT_HEADER] = str(count)
 
         if self.use_https:
-            conn = httplib.HTTPSConnection(self.hostname, self.port, timeout=self.TIMEOUT)
+            return self._secure_put(endpoint, data, headers)
         else:
             conn = httplib.HTTPConnection(self.hostname, self.port, timeout=self.TIMEOUT)
 
@@ -225,3 +234,10 @@ class API(object):
             return Response.from_http_response(resp)
         finally:
             conn.close()
+
+    def _secure_put(self, endpoint, data, headers):
+        import requests
+
+        url = 'https://' + self.hostname + endpoint
+        resp = requests.put(url, data=data, headers=headers)
+        return Response.from_requests_http_response(resp)
