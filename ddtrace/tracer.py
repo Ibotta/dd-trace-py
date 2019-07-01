@@ -127,6 +127,10 @@ class Tracer(object):
         if sampler is not None:
             self.sampler = sampler
 
+        if use_https:
+            if hasattr(self, 'writer') and hasattr(self.writer, 'api'):
+                self.writer.api.use_https = use_https
+
         # If priority sampling is not set or is True and no priority sampler is set yet
         if priority_sampling in (None, True) and not self.priority_sampler:
             self.priority_sampler = RateByServiceSampler()
