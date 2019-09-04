@@ -115,7 +115,7 @@ class API(object):
     # This ought to be enough as the agent is local
     TIMEOUT = 2
 
-    def __init__(self, hostname, port, headers=None, encoder=None, priority_sampling=False, use_https=False):
+    def __init__(self, hostname, port, headers=None, encoder=None, priority_sampling=False, use_https=True):
         self.hostname = hostname
         self.port = int(port)
         self.use_https = use_https
