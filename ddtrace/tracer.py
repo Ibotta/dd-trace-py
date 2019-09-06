@@ -97,7 +97,7 @@ class Tracer(object):
 
     def configure(self, enabled=None, hostname=None, port=None, dogstatsd_host=None,
                   dogstatsd_port=None, sampler=None, context_provider=None, wrap_executor=None,
-                  priority_sampling=None, settings=None, collect_metrics=None, use_https=False):
+                  priority_sampling=None, settings=None, collect_metrics=None, use_https=True):
         """
         Configure an existing Tracer the easy way.
         Allow to configure or reconfigure a Tracer instance.

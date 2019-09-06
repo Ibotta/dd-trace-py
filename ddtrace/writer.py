@@ -19,7 +19,7 @@ LOG_ERR_INTERVAL = 60
 
 class AgentWriter(object):
 
-    def __init__(self, hostname='localhost', port=8126, filters=None, priority_sampler=None, use_https=False):
+    def __init__(self, hostname='localhost', port=8126, filters=None, priority_sampler=None, use_https=True):
         self._pid = None
         self._traces = None
         self._worker = None
